@@ -371,7 +371,12 @@
     margin-left: auto;
   }
 
-  /* PLACE VALUE TABLE */
+  #exerciseContent {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
   .place-value-table {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -577,13 +582,21 @@ const TOPICS = {
     color: '#E0EEFF',
     questions: shuffleAndPick([
       { type: 'input', badge: '➕ חיבור',
-        question: '23,456 + 18,321 = ?',
-        correct: '41777',
-        explain: '23,456 + 18,321 = 41,777' },
+        question: '1,340 + 2,250 = ?',
+        correct: '3590',
+        explain: '1,340 + 2,250 = 3,590' },
+      { type: 'input', badge: '➕ חיבור',
+        question: '4,500 + 3,200 = ?',
+        correct: '7700',
+        explain: '4,500 + 3,200 = 7,700' },
       { type: 'input', badge: '➖ חיסור',
-        question: '75,000 − 28,654 = ?',
-        correct: '46346',
-        explain: '75,000 − 28,654 = 46,346' },
+        question: '8,000 − 3,500 = ?',
+        correct: '4500',
+        explain: '8,000 − 3,500 = 4,500' },
+      { type: 'input', badge: '➖ חיסור',
+        question: '6,300 − 1,200 = ?',
+        correct: '5100',
+        explain: '6,300 − 1,200 = 5,100' },
       { type: 'mc', badge: '✖️ כפל',
         question: '7 × 8 = ?',
         choices: ['54','56','63','48'],
@@ -622,23 +635,23 @@ const TOPICS = {
         correct: '19',
         explain: 'קודם 3 × 5 = 15, אחר כך 4 + 15 = 19' },
       { type: 'mc', badge: '🔢 פתרון בעיות',
-        question: 'בספריה יש 12,500 ספרים. השאילו 3,750. כמה נשארו?',
-        choices: ['8,250','8,750','9,250','9,750'],
+        question: 'בספריה יש 5,200 ספרים. השאילו 1,300. כמה נשארו?',
+        choices: ['3,700','3,900','4,100','4,300'],
         correct: 1,
-        explain: '12,500 − 3,750 = 8,750 ספרים' },
+        explain: '5,200 − 1,300 = 3,900 ספרים' },
       { type: 'input', badge: '✖️ כפל',
         question: '6 × 7 = ?',
         correct: '42',
         explain: '6 × 7 = 42 — שורה בלוח הכפל!' },
-      { type: 'mc', badge: '🔢 מספרים זוגיים',
+      { type: 'mc', badge: '🔢 כפולות',
         question: 'איזה מהמספרים הבאים הוא כפולה של 10?',
         choices: ['455','1,230','7,777','33,333'],
         correct: 1,
         explain: '1,230 מסתיים ב-0, ולכן הוא כפולה של 10' },
-      { type: 'input', badge: '➕ חיבור עם מעבר',
-        question: '45,678 + 9,999 = ?',
-        correct: '55677',
-        explain: '45,678 + 9,999 = 55,677' },
+      { type: 'input', badge: '➕ חיבור',
+        question: '2,400 + 1,600 = ?',
+        correct: '4000',
+        explain: '2,400 + 1,600 = 4,000' },
     ], 10)
   },
 
