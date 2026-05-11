@@ -146,10 +146,11 @@
     min-height: 300px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-end;
     animation: slideUp 0.4s cubic-bezier(.34,1.56,.64,1) both;
     position: relative;
     overflow: hidden;
+    width: 100%;
   }
 
   @keyframes slideUp {
@@ -160,7 +161,7 @@
   .exercise-type-badge {
     position: absolute;
     top: 16px;
-    left: 16px;
+    right: 16px;
     background: var(--purple);
     color: white;
     font-size: 0.75em;
@@ -174,16 +175,17 @@
     color: #999;
     position: absolute;
     top: 16px;
-    right: 20px;
+    left: 20px;
   }
 
   .question-text {
     font-family: 'Fredoka One', cursive;
     font-size: 1.7em;
-    text-align: center;
+    text-align: right;
     color: var(--dark);
     margin: 30px 0 24px;
     line-height: 1.4;
+    width: 100%;
   }
 
   .big-number {
@@ -216,7 +218,8 @@
     color: var(--dark);
     transition: all 0.15s;
     box-shadow: 0 4px 0 #E0E0E0;
-    text-align: center;
+    text-align: right;
+    direction: rtl;
   }
   .choice-btn:hover:not(:disabled) {
     border-color: var(--sky);
@@ -289,7 +292,8 @@
   .feedback {
     font-family: 'Fredoka One', cursive;
     font-size: 1.4em;
-    text-align: center;
+    text-align: right;
+    width: 100%;
     margin-top: 16px;
     min-height: 40px;
     animation: popIn 0.3s ease;
@@ -309,7 +313,7 @@
     margin-top: 12px;
     font-size: 0.95em;
     color: #555;
-    text-align: center;
+    text-align: right;
     border: 2px dashed var(--sun);
     display: none;
     width: 100%;
@@ -361,8 +365,10 @@
   .progress-bar {
     height: 100%;
     border-radius: 20px;
-    background: linear-gradient(90deg, var(--grass), var(--sky));
+    background: linear-gradient(270deg, var(--grass), var(--sky));
     transition: width 0.5s cubic-bezier(.34,1.56,.64,1);
+    margin-right: 0;
+    margin-left: auto;
   }
 
   /* PLACE VALUE TABLE */
@@ -514,12 +520,12 @@ const TOPICS = {
         explain: '47,352 — הספרה 7 נמצאת במקום האלפים: 7 × 1,000 = 7,000' },
       { type: 'mc', badge: '🔢 מבנה עשרוני',
         question: 'מהו ערך הספרה 3 במספר 83,641?',
-        choices: ['3,000','300','30,000','3'],
+        choices: ['300','3,000','30,000','3'],
         correct: 1,
-        explain: 'הספרה 3 נמצאת במקום המאות: 3 × 100 = 300' },
+        explain: '83,641 — הספרה 3 נמצאת במקום האלפים: 3 × 1,000 = 3,000' },
       { type: 'mc', badge: '🔢 ייצוג טבעי',
         question: 'איזה מספר שווה ל: 50,000 + 6,000 + 200 + 40 + 8?',
-        choices: ['56,248','56,284','52,648','56,248'],
+        choices: ['56,248','56,284','52,648','56,428'],
         correct: 0,
         explain: '50,000 + 6,000 + 200 + 40 + 8 = 56,248' },
       { type: 'input', badge: '🔢 השלמת ערך',
@@ -546,9 +552,9 @@ const TOPICS = {
         correct: 0,
         explain: 'הספרה 8 נמצאת במקום העשרות, ולכן יש 8 עשרות' },
       { type: 'input', badge: '🔢 ייצוג',
-        question: 'כמה אחדות יש ב: 3 אלפים + 12 מאות?',
+        question: 'כתוב כמספר: 3 אלפים + 12 מאות',
         correct: '4200',
-        explain: '3,000 + 1,200 = 4,200' },
+        explain: '3 אלפים = 3,000 | 12 מאות = 1,200 | סה"כ: 3,000 + 1,200 = 4,200' },
       { type: 'mc', badge: '🔢 סדר',
         question: 'מיינו מהקטן לגדול: 23,001 | 22,999 | 23,100 | 23,010',
         choices: ['22,999 → 23,001 → 23,010 → 23,100','23,100 → 23,010 → 23,001 → 22,999','22,999 → 23,010 → 23,001 → 23,100','23,001 → 22,999 → 23,100 → 23,010'],
