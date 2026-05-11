@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מתמטיקה כיתה ג׳ 🌟</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sky: #6EC6FF;
+    --sun: #FFD93D;
+    --grass: #6BCB77;
+    --coral: #FF6B6B;
+    --purple: #C77DFF;
+    --white: #FFFDF7;
+    --dark: #2D2D2D;
+    --shadow: 0 6px 0px rgba(0,0,0,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Rubik', sans-serif;
+    background: linear-gradient(160deg, #E0F4FF 0%, #FFF8E7 50%, #E8FFE8 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* CLOUDS */
+  .cloud {
+    position: fixed;
+    background: white;
+    border-radius: 50px;
+    opacity: 0.7;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .cloud::before, .cloud::after {
+    content: '';
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+  }
+  .cloud-1 { width: 120px; height: 40px; top: 8%; left: 5%; animation: float 7s ease-in-out infinite; }
+  .cloud-1::before { width: 60px; height: 60px; top: -30px; left: 20px; }
+  .cloud-1::after { width: 40px; height: 40px; top: -20px; left: 55px; }
+  .cloud-2 { width: 90px; height: 30px; top: 15%; right: 10%; animation: float 9s ease-in-out infinite reverse; }
+  .cloud-2::before { width: 45px; height: 45px; top: -22px; left: 15px; }
+  .cloud-2::after { width: 30px; height: 30px; top: -15px; left: 45px; }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+  }
+
+  /* STARS background */
+  .star-bg {
+    position: fixed;
+    font-size: 24px;
+    opacity: 0.12;
+    pointer-events: none;
+    z-index: 0;
+    animation: twinkle 3s ease-in-out infinite;
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.12; transform: scale(1); }
+    50% { opacity: 0.25; transform: scale(1.2); }
+  }
+
+  .app-container {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+
+  /* HEADER */
+  .header {
+    text-align: center;
+    margin-bottom: 28px;
+    animation: popIn 0.6s cubic-bezier(.34,1.56,.64,1) both;
+  }
+  .header-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2.8em;
+    color: var(--dark);
+    text-shadow: 3px 3px 0 var(--sun);
+    line-height: 1.1;
+  }
+  .header-subtitle {
+    font-size: 1em;
+    color: #666;
+    margin-top: 6px;
+  }
+  .star-score {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--sun);
+    border-radius: 50px;
+    padding: 8px 20px;
+    margin-top: 12px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.3em;
+    box-shadow: var(--shadow);
+    color: var(--dark);
+  }
+
+  /* TOPIC CARDS */
+  .topics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .topic-btn {
+    border: none;
+    border-radius: 20px;
+    padding: 18px 10px;
+    cursor: pointer;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1em;
+    text-align: center;
+    box-shadow: var(--shadow);
+    transition: transform 0.15s, box-shadow 0.15s;
+    position: relative;
+    overflow: hidden;
+  }
+  .topic-btn:hover { transform: translateY(-4px); box-shadow: 0 10px 0px rgba(0,0,0,0.15); }
+  .topic-btn:active { transform: translateY(2px); box-shadow: 0 3px 0px rgba(0,0,0,0.15); }
+  .topic-btn.active { outline: 4px solid var(--dark); }
+  .topic-btn .icon { font-size: 2.2em; display: block; margin-bottom: 6px; }
+  .topic-btn .label { font-size: 0.85em; color: var(--dark); }
+
+  .btn-numbers { background: #FFE0E0; }
+  .btn-calc { background: #E0EEFF; }
+  .btn-geo { background: #E0FFE5; }
+
+  /* EXERCISE CARD */
+  .exercise-card {
+    background: var(--white);
+    border-radius: 28px;
+    padding: 28px 24px;
+    box-shadow: 0 8px 0 rgba(0,0,0,0.1), 0 0 0 3px rgba(0,0,0,0.05);
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: slideUp 0.4s cubic-bezier(.34,1.56,.64,1) both;
+    position: relative;
+    overflow: hidden;
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .exercise-type-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: var(--purple);
+    color: white;
+    font-size: 0.75em;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 700;
+  }
+
+  .question-number {
+    font-size: 0.85em;
+    color: #999;
+    position: absolute;
+    top: 16px;
+    right: 20px;
+  }
+
+  .question-text {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.7em;
+    text-align: center;
+    color: var(--dark);
+    margin: 30px 0 24px;
+    line-height: 1.4;
+  }
+
+  .big-number {
+    font-family: 'Fredoka One', cursive;
+    font-size: 3em;
+    color: var(--coral);
+    background: #FFF0F0;
+    border-radius: 20px;
+    padding: 10px 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 0 #FFB8B8;
+  }
+
+  /* CHOICES */
+  .choices-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    width: 100%;
+    margin-top: 8px;
+  }
+  .choice-btn {
+    border: 3px solid #E0E0E0;
+    border-radius: 16px;
+    padding: 16px 10px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.4em;
+    cursor: pointer;
+    background: white;
+    color: var(--dark);
+    transition: all 0.15s;
+    box-shadow: 0 4px 0 #E0E0E0;
+    text-align: center;
+  }
+  .choice-btn:hover:not(:disabled) {
+    border-color: var(--sky);
+    background: #F0FAFF;
+    transform: translateY(-3px);
+    box-shadow: 0 7px 0 #B8DFFF;
+  }
+  .choice-btn.correct {
+    border-color: var(--grass);
+    background: #E8FFE8;
+    box-shadow: 0 4px 0 #90D890;
+    animation: bounce 0.4s ease;
+  }
+  .choice-btn.wrong {
+    border-color: var(--coral);
+    background: #FFE8E8;
+    box-shadow: 0 4px 0 #FFB0B0;
+    animation: shake 0.4s ease;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    75% { transform: translateX(8px); }
+  }
+
+  /* INPUT */
+  .answer-input {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2em;
+    text-align: center;
+    border: 3px solid #E0E0E0;
+    border-radius: 16px;
+    padding: 12px 20px;
+    width: 180px;
+    color: var(--dark);
+    background: white;
+    box-shadow: 0 4px 0 #E0E0E0;
+    outline: none;
+    margin-bottom: 16px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .answer-input:focus {
+    border-color: var(--sky);
+    box-shadow: 0 4px 0 #B8DFFF;
+  }
+  .answer-input.correct { border-color: var(--grass); box-shadow: 0 4px 0 #90D890; background: #E8FFE8; }
+  .answer-input.wrong { border-color: var(--coral); box-shadow: 0 4px 0 #FFB0B0; background: #FFE8E8; }
+
+  .submit-btn {
+    background: var(--grass);
+    border: none;
+    border-radius: 16px;
+    padding: 14px 40px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.3em;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 5px 0 #3A9E45;
+    transition: all 0.15s;
+  }
+  .submit-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 0 #3A9E45; }
+  .submit-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #3A9E45; }
+
+  /* FEEDBACK */
+  .feedback {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.4em;
+    text-align: center;
+    margin-top: 16px;
+    min-height: 40px;
+    animation: popIn 0.3s ease;
+  }
+  .feedback.correct { color: var(--grass); }
+  .feedback.wrong { color: var(--coral); }
+  @keyframes popIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  /* EXPLANATION */
+  .explanation {
+    background: #FFF8D6;
+    border-radius: 16px;
+    padding: 14px 18px;
+    margin-top: 12px;
+    font-size: 0.95em;
+    color: #555;
+    text-align: center;
+    border: 2px dashed var(--sun);
+    display: none;
+    width: 100%;
+  }
+  .explanation.show { display: block; animation: popIn 0.3s ease; }
+
+  /* NEXT BUTTON */
+  .next-btn {
+    background: var(--sky);
+    border: none;
+    border-radius: 16px;
+    padding: 14px 40px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.3em;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 5px 0 #3A99D9;
+    transition: all 0.15s;
+    margin-top: 16px;
+    display: none;
+  }
+  .next-btn.show { display: inline-block; animation: popIn 0.4s cubic-bezier(.34,1.56,.64,1); }
+  .next-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 0 #3A99D9; }
+
+  /* CONFETTI */
+  .confetti-piece {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    top: -10px;
+    border-radius: 2px;
+    animation: confettiFall linear forwards;
+    pointer-events: none;
+    z-index: 999;
+  }
+  @keyframes confettiFall {
+    to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    background: #E8E8E8;
+    border-radius: 20px;
+    height: 12px;
+    margin: 0 0 20px;
+    overflow: hidden;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+  }
+  .progress-bar {
+    height: 100%;
+    border-radius: 20px;
+    background: linear-gradient(90deg, var(--grass), var(--sky));
+    transition: width 0.5s cubic-bezier(.34,1.56,.64,1);
+  }
+
+  /* PLACE VALUE TABLE */
+  .place-value-table {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+    margin: 10px 0 16px;
+    width: 100%;
+  }
+  .pv-cell {
+    background: #F0F4FF;
+    border-radius: 10px;
+    padding: 8px 4px;
+    text-align: center;
+    border: 2px solid #C8D8FF;
+  }
+  .pv-cell .pv-label { font-size: 0.65em; color: #888; display: block; }
+  .pv-cell .pv-value { font-family: 'Fredoka One', cursive; font-size: 1.3em; color: var(--dark); }
+  .pv-cell.highlight { background: #FFF0D0; border-color: var(--sun); }
+
+  /* ANGLE VISUAL */
+  .angle-visual {
+    width: 140px;
+    height: 140px;
+    margin: 10px auto;
+  }
+
+  /* SHAPE VISUAL */
+  .shape-visual {
+    margin: 10px auto;
+  }
+
+  /* COMPLETION SCREEN */
+  .completion-screen {
+    text-align: center;
+    padding: 20px;
+    display: none;
+  }
+  .completion-screen.show { display: block; animation: popIn 0.5s cubic-bezier(.34,1.56,.64,1); }
+  .completion-emoji { font-size: 4em; margin-bottom: 10px; }
+  .completion-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2em;
+    color: var(--dark);
+    text-shadow: 2px 2px 0 var(--sun);
+  }
+  .completion-score {
+    font-size: 1.2em;
+    color: #666;
+    margin: 10px 0 20px;
+  }
+  .restart-btn {
+    background: var(--coral);
+    border: none;
+    border-radius: 16px;
+    padding: 14px 40px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.3em;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 5px 0 #C94040;
+    transition: all 0.15s;
+  }
+  .restart-btn:hover { transform: translateY(-3px); }
+
+  @media (max-width: 500px) {
+    .header-title { font-size: 2em; }
+    .topics-grid { grid-template-columns: 1fr 1fr 1fr; }
+    .topic-btn { padding: 14px 6px; font-size: 0.8em; }
+    .topic-btn .icon { font-size: 1.8em; }
+    .question-text { font-size: 1.4em; }
+    .choice-btn { font-size: 1.2em; padding: 13px 8px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Background decorations -->
+<div class="cloud cloud-1"></div>
+<div class="cloud cloud-2"></div>
+<div class="star-bg" style="top:20%;left:3%;animation-delay:0s">⭐</div>
+<div class="star-bg" style="top:40%;right:4%;animation-delay:1s">🌟</div>
+<div class="star-bg" style="top:70%;left:6%;animation-delay:2s">✨</div>
+<div class="star-bg" style="top:80%;right:2%;animation-delay:0.5s">⭐</div>
+
+<div class="app-container">
+  <div class="header">
+    <div class="header-title">🎒 מתמטיקה ג׳</div>
+    <div class="header-subtitle">תרגול לקראת המבחן</div>
+    <div class="star-score">⭐ <span id="scoreDisplay">0</span> נקודות</div>
+  </div>
+
+  <!-- Topic Selector -->
+  <div class="topics-grid">
+    <button class="topic-btn btn-numbers active" onclick="setTopic('numbers')">
+      <span class="icon">🔢</span>
+      <span class="label">מספרים טבעיים</span>
+    </button>
+    <button class="topic-btn btn-calc" onclick="setTopic('calc')">
+      <span class="icon">➕</span>
+      <span class="label">חשבון ברבבה</span>
+    </button>
+    <button class="topic-btn btn-geo" onclick="setTopic('geo')">
+      <span class="icon">📐</span>
+      <span class="label">גאומטריה</span>
+    </button>
+  </div>
+
+  <!-- Progress -->
+  <div class="progress-wrap">
+    <div class="progress-bar" id="progressBar" style="width:0%"></div>
+  </div>
+
+  <!-- Exercise Card -->
+  <div class="exercise-card" id="exerciseCard">
+    <div class="exercise-type-badge" id="exerciseBadge">שאלה</div>
+    <div class="question-number" id="questionNum">1 / 10</div>
+    <div id="exerciseContent"></div>
+    <div class="feedback" id="feedback"></div>
+    <div class="explanation" id="explanation"></div>
+    <button class="next-btn" id="nextBtn" onclick="nextQuestion()">השאלה הבאה ←</button>
+  </div>
+
+  <!-- Completion -->
+  <div class="completion-screen" id="completionScreen">
+    <div class="completion-emoji" id="completionEmoji">🏆</div>
+    <div class="completion-title" id="completionTitle">כל הכבוד!</div>
+    <div class="completion-score" id="completionScoreText"></div>
+    <button class="restart-btn" onclick="restartTopic()">🔄 שוב פעם!</button>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// DATA: Questions per topic
+// ============================================================
+
+const TOPICS = {
+  numbers: {
+    name: 'מספרים טבעיים',
+    color: '#FFE0E0',
+    questions: shuffleAndPick([
+      // Place value - decimal structure
+      { type: 'mc', badge: '🔢 מבנה עשרוני',
+        question: 'מהו ערך הספרה 7 במספר 47,352?',
+        choices: ['7,000','700','70,000','70'],
+        correct: 0,
+        explain: '47,352 — הספרה 7 נמצאת במקום האלפים: 7 × 1,000 = 7,000' },
+      { type: 'mc', badge: '🔢 מבנה עשרוני',
+        question: 'מהו ערך הספרה 3 במספר 83,641?',
+        choices: ['3,000','300','30,000','3'],
+        correct: 1,
+        explain: 'הספרה 3 נמצאת במקום המאות: 3 × 100 = 300' },
+      { type: 'mc', badge: '🔢 ייצוג טבעי',
+        question: 'איזה מספר שווה ל: 50,000 + 6,000 + 200 + 40 + 8?',
+        choices: ['56,248','56,284','52,648','56,248'],
+        correct: 0,
+        explain: '50,000 + 6,000 + 200 + 40 + 8 = 56,248' },
+      { type: 'input', badge: '🔢 השלמת ערך',
+        question: 'כתוב את המספר: שלושים ואחת אלף, חמש מאות ושבע',
+        correct: '31507',
+        explain: '31,507 — שלושים ואחת אלף (31,000) + חמש מאות (500) + שבע (7)' },
+      { type: 'mc', badge: '🔢 השוואה',
+        question: 'איזה מספר הכי גדול?',
+        choices: ['64,899','65,001','64,999','65,000'],
+        correct: 1,
+        explain: '65,001 > 65,000 > 64,999 > 64,899' },
+      { type: 'mc', badge: '🔢 השוואה',
+        question: 'הכנסו < , > או = : 39,999 __ 40,000',
+        choices: ['<','>','=','אי אפשר לדעת'],
+        correct: 0,
+        explain: '39,999 קטן מ-40,000 כי 39,999 < 40,000' },
+      { type: 'input', badge: '🔢 ישר המספרים',
+        question: 'מה המספר שבא אחרי 49,999?',
+        correct: '50000',
+        explain: '49,999 + 1 = 50,000 — כעת עוברים לרבבה החמישית!' },
+      { type: 'mc', badge: '🔢 ספרה במקום',
+        question: 'כמה עשרות יש במספר 72,485?',
+        choices: ['8','48','7','2'],
+        correct: 0,
+        explain: 'הספרה 8 נמצאת במקום העשרות, ולכן יש 8 עשרות' },
+      { type: 'input', badge: '🔢 ייצוג',
+        question: 'כמה אחדות יש ב: 3 אלפים + 12 מאות?',
+        correct: '4200',
+        explain: '3,000 + 1,200 = 4,200' },
+      { type: 'mc', badge: '🔢 סדר',
+        question: 'מיינו מהקטן לגדול: 23,001 | 22,999 | 23,100 | 23,010',
+        choices: ['22,999 → 23,001 → 23,010 → 23,100','23,100 → 23,010 → 23,001 → 22,999','22,999 → 23,010 → 23,001 → 23,100','23,001 → 22,999 → 23,100 → 23,010'],
+        correct: 0,
+        explain: 'מהקטן: 22,999 < 23,001 < 23,010 < 23,100' },
+      { type: 'mc', badge: '🔢 מבנה',
+        question: 'מה ערך הספרה 5 במספר 25,000?',
+        choices: ['5,000','50,000','500','5'],
+        correct: 0,
+        explain: 'הספרה 5 במקום האלפים: 5 × 1,000 = 5,000' },
+      { type: 'input', badge: '🔢 ייצוג',
+        question: 'כמה רבבות (10,000) יש ב-30,000?',
+        correct: '3',
+        explain: '30,000 ÷ 10,000 = 3 רבבות' },
+    ], 10)
+  },
+
+  calc: {
+    name: 'חשבון ברבבה',
+    color: '#E0EEFF',
+    questions: shuffleAndPick([
+      { type: 'input', badge: '➕ חיבור',
+        question: '23,456 + 18,321 = ?',
+        correct: '41777',
+        explain: '23,456 + 18,321 = 41,777' },
+      { type: 'input', badge: '➖ חיסור',
+        question: '75,000 − 28,654 = ?',
+        correct: '46346',
+        explain: '75,000 − 28,654 = 46,346' },
+      { type: 'mc', badge: '✖️ כפל',
+        question: '7 × 8 = ?',
+        choices: ['54','56','63','48'],
+        correct: 1,
+        explain: '7 × 8 = 56 — חשוב לזכור מלוח הכפל!' },
+      { type: 'mc', badge: '✖️ כפל',
+        question: '9 × 6 = ?',
+        choices: ['45','54','56','63'],
+        correct: 1,
+        explain: '9 × 6 = 54' },
+      { type: 'input', badge: '✖️ כפל',
+        question: '34 × 10 = ?',
+        correct: '340',
+        explain: 'כשמכפילים ב-10, מוסיפים אפס בסוף: 34 → 340' },
+      { type: 'input', badge: '✖️ כפל',
+        question: '25 × 100 = ?',
+        correct: '2500',
+        explain: 'כשמכפילים ב-100, מוסיפים שני אפסים: 25 → 2,500' },
+      { type: 'mc', badge: '➗ חילוק',
+        question: '63 ÷ 9 = ?',
+        choices: ['6','7','8','9'],
+        correct: 1,
+        explain: '63 ÷ 9 = 7 כי 9 × 7 = 63' },
+      { type: 'mc', badge: '➗ חילוק',
+        question: '48 ÷ 6 = ?',
+        choices: ['6','7','8','9'],
+        correct: 2,
+        explain: '48 ÷ 6 = 8 כי 6 × 8 = 48' },
+      { type: 'mc', badge: '🔢 סדר פעולות',
+        question: 'מה מחשבים ראשון? 5 + 3 × 2',
+        choices: ['5 + 3 קודם','3 × 2 קודם','משמאל לימין','הכל יחד'],
+        correct: 1,
+        explain: 'כפל ✖️ תמיד לפני חיבור ➕! אז קודם 3 × 2 = 6, אחר כך 5 + 6 = 11' },
+      { type: 'input', badge: '🔢 סדר פעולות',
+        question: '4 + 3 × 5 = ?',
+        correct: '19',
+        explain: 'קודם 3 × 5 = 15, אחר כך 4 + 15 = 19' },
+      { type: 'mc', badge: '🔢 פתרון בעיות',
+        question: 'בספריה יש 12,500 ספרים. השאילו 3,750. כמה נשארו?',
+        choices: ['8,250','8,750','9,250','9,750'],
+        correct: 1,
+        explain: '12,500 − 3,750 = 8,750 ספרים' },
+      { type: 'input', badge: '✖️ כפל',
+        question: '6 × 7 = ?',
+        correct: '42',
+        explain: '6 × 7 = 42 — שורה בלוח הכפל!' },
+      { type: 'mc', badge: '🔢 מספרים זוגיים',
+        question: 'איזה מהמספרים הבאים הוא כפולה של 10?',
+        choices: ['455','1,230','7,777','33,333'],
+        correct: 1,
+        explain: '1,230 מסתיים ב-0, ולכן הוא כפולה של 10' },
+      { type: 'input', badge: '➕ חיבור עם מעבר',
+        question: '45,678 + 9,999 = ?',
+        correct: '55677',
+        explain: '45,678 + 9,999 = 55,677' },
+    ], 10)
+  },
+
+  geo: {
+    name: 'גאומטריה',
+    color: '#E0FFE5',
+    questions: shuffleAndPick([
+      { type: 'mc', badge: '📐 זוויות',
+        question: 'זווית ישרה שווה ל:',
+        choices: ['180°','90°','45°','360°'],
+        correct: 1,
+        explain: 'זווית ישרה = 90° — כמו פינת מחברת!' },
+      { type: 'mc', badge: '📐 זוויות',
+        question: 'זווית קהה היא:',
+        choices: ['קטנה מ-90°','שווה ל-90°','גדולה מ-90° ופחות מ-180°','שווה ל-180°'],
+        correct: 2,
+        explain: 'זווית קהה: בין 90° ל-180°. גדולה מישרה אבל לא שטוחה!' },
+      { type: 'mc', badge: '📐 זוויות',
+        question: 'זווית חדה היא:',
+        choices: ['גדולה מ-90°','שווה ל-90°','קטנה מ-90°','שווה ל-180°'],
+        correct: 2,
+        explain: 'זווית חדה קטנה מ-90° — "חדה" כמו קצה עיפרון' },
+      { type: 'mc', badge: '🔺 משולשים',
+        question: 'משולש שיש לו שני צלעות שוות נקרא:',
+        choices: ['שווה צלעות','שווה שוקיים','ישר זווית','קהה זווית'],
+        correct: 1,
+        explain: 'שווה שוקיים = שתי צלעות שוות. שווה צלעות = שלוש צלעות שוות!' },
+      { type: 'mc', badge: '🔺 משולשים',
+        question: 'כמה מעלות יש בסכום הזוויות של כל משולש?',
+        choices: ['90°','180°','270°','360°'],
+        correct: 1,
+        explain: 'תמיד! בכל משולש סכום שלוש הזוויות = 180°' },
+      { type: 'input', badge: '🔺 חישוב זווית',
+        question: 'במשולש יש זוויות של 60° ו-70°. מה הזווית השלישית?',
+        correct: '50',
+        explain: '60 + 70 + ? = 180 → ? = 180 − 130 = 50°' },
+      { type: 'mc', badge: '🟦 שטח והיקף',
+        question: 'מה נוסחת השטח של מלבן?',
+        choices: ['אורך + רוחב','(אורך + רוחב) × 2','אורך × רוחב','אורך × רוחב × 2'],
+        correct: 2,
+        explain: 'שטח מלבן = אורך × רוחב. היקף = (אורך + רוחב) × 2' },
+      { type: 'input', badge: '🟦 שטח',
+        question: 'מלבן באורך 8 ס"מ ורוחב 5 ס"מ. מה שטחו?',
+        correct: '40',
+        explain: 'שטח = 8 × 5 = 40 ס"מ²' },
+      { type: 'input', badge: '🟦 היקף',
+        question: 'ריבוע עם צלע 6 ס"מ. מה היקפו?',
+        correct: '24',
+        explain: 'היקף ריבוע = 4 × צלע = 4 × 6 = 24 ס"מ' },
+      { type: 'mc', badge: '📐 זיהוי',
+        question: 'איזו זווית יש בפינת מחברת?',
+        choices: ['זווית חדה','זווית ישרה','זווית קהה','זווית שטוחה'],
+        correct: 1,
+        explain: 'פינת מחברת = זווית ישרה = 90° בדיוק' },
+      { type: 'mc', badge: '🔺 משולשים',
+        question: 'משולש שיש לו זווית ישרה (90°) נקרא:',
+        choices: ['שווה שוקיים','שווה צלעות','ישר זווית','קהה זווית'],
+        correct: 2,
+        explain: 'משולש ישר זווית — יש לו זווית אחת של בדיוק 90°' },
+      { type: 'input', badge: '🟦 היקף',
+        question: 'מלבן: אורך 10 ס"מ, רוחב 4 ס"מ. מה ההיקף?',
+        correct: '28',
+        explain: 'היקף = (10 + 4) × 2 = 14 × 2 = 28 ס"מ' },
+    ], 10)
+  }
+};
+
+// ============================================================
+// STATE
+// ============================================================
+let currentTopic = 'numbers';
+let currentQuestions = [];
+let currentIndex = 0;
+let score = 0;
+let answered = false;
+let totalScore = 0;
+
+// ============================================================
+// UTILS
+// ============================================================
+function shuffleAndPick(arr, n) {
+  const shuffled = [...arr].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, Math.min(n, shuffled.length));
+}
+
+function setTopic(topic) {
+  currentTopic = topic;
+  document.querySelectorAll('.topic-btn').forEach(b => b.classList.remove('active'));
+  const map = { numbers: 0, calc: 1, geo: 2 };
+  document.querySelectorAll('.topic-btn')[map[topic]].classList.add('active');
+
+  // Rebuild questions fresh
+  const source = TOPICS[topic];
+  currentQuestions = shuffleAndPick(
+    TOPICS[topic].questions.length < 10
+      ? TOPICS[topic].questions
+      : TOPICS[topic].questions,
+    10
+  );
+  currentIndex = 0;
+  score = 0;
+  answered = false;
+
+  document.getElementById('completionScreen').classList.remove('show');
+  document.getElementById('exerciseCard').style.display = 'flex';
+  updateProgress();
+  renderQuestion();
+}
+
+function updateProgress() {
+  const pct = currentQuestions.length > 0 ? (currentIndex / currentQuestions.length) * 100 : 0;
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('questionNum').textContent = `${currentIndex + 1} / ${currentQuestions.length}`;
+}
+
+function renderQuestion() {
+  answered = false;
+  const q = currentQuestions[currentIndex];
+  const card = document.getElementById('exerciseCard');
+  card.style.animation = 'none';
+  requestAnimationFrame(() => {
+    card.style.animation = 'slideUp 0.4s cubic-bezier(.34,1.56,.64,1) both';
+  });
+
+  document.getElementById('exerciseBadge').textContent = q.badge;
+  document.getElementById('feedback').textContent = '';
+  document.getElementById('feedback').className = 'feedback';
+  document.getElementById('explanation').textContent = '';
+  document.getElementById('explanation').className = 'explanation';
+  document.getElementById('nextBtn').className = 'next-btn';
+  updateProgress();
+
+  const content = document.getElementById('exerciseContent');
+
+  if (q.type === 'mc') {
+    content.innerHTML = `
+      <div class="question-text">${q.question}</div>
+      <div class="choices-grid">
+        ${q.choices.map((c, i) =>
+          `<button class="choice-btn" onclick="checkMC(${i})" id="choice-${i}">${c}</button>`
+        ).join('')}
+      </div>
+    `;
+  } else if (q.type === 'input') {
+    content.innerHTML = `
+      <div class="question-text">${q.question}</div>
+      <input type="number" class="answer-input" id="answerInput" placeholder="?" 
+             onkeydown="if(event.key==='Enter')checkInput()" inputmode="numeric"/>
+      <button class="submit-btn" onclick="checkInput()">✔ בדוק</button>
+    `;
+    setTimeout(() => {
+      const inp = document.getElementById('answerInput');
+      if (inp) inp.focus();
+    }, 300);
+  }
+}
+
+function checkMC(chosen) {
+  if (answered) return;
+  answered = true;
+  const q = currentQuestions[currentIndex];
+  const buttons = document.querySelectorAll('.choice-btn');
+  buttons.forEach(b => b.disabled = true);
+
+  const feedbackEl = document.getElementById('feedback');
+  const explEl = document.getElementById('explanation');
+
+  if (chosen === q.correct) {
+    buttons[chosen].classList.add('correct');
+    feedbackEl.textContent = getPositive();
+    feedbackEl.className = 'feedback correct';
+    score++;
+    totalScore++;
+    document.getElementById('scoreDisplay').textContent = totalScore;
+    if (score % 3 === 0) launchConfetti();
+  } else {
+    buttons[chosen].classList.add('wrong');
+    buttons[q.correct].classList.add('correct');
+    feedbackEl.textContent = '😅 כמעט! בפעם הבאה תצליח!';
+    feedbackEl.className = 'feedback wrong';
+  }
+
+  explEl.textContent = '💡 ' + q.explain;
+  explEl.className = 'explanation show';
+  document.getElementById('nextBtn').className = 'next-btn show';
+}
+
+function checkInput() {
+  if (answered) return;
+  const input = document.getElementById('answerInput');
+  if (!input) return;
+  const val = input.value.trim().replace(/,/g, '');
+  if (!val) return;
+
+  answered = true;
+  const q = currentQuestions[currentIndex];
+  const feedbackEl = document.getElementById('feedback');
+  const explEl = document.getElementById('explanation');
+  input.disabled = true;
+  document.querySelector('.submit-btn').disabled = true;
+
+  if (val === q.correct) {
+    input.classList.add('correct');
+    feedbackEl.textContent = getPositive();
+    feedbackEl.className = 'feedback correct';
+    score++;
+    totalScore++;
+    document.getElementById('scoreDisplay').textContent = totalScore;
+    if (score % 3 === 0) launchConfetti();
+  } else {
+    input.classList.add('wrong');
+    feedbackEl.textContent = `😅 התשובה הנכונה היא: ${formatAnswer(q.correct)}`;
+    feedbackEl.className = 'feedback wrong';
+  }
+
+  explEl.textContent = '💡 ' + q.explain;
+  explEl.className = 'explanation show';
+  document.getElementById('nextBtn').className = 'next-btn show';
+}
+
+function formatAnswer(ans) {
+  const n = parseInt(ans);
+  if (!isNaN(n) && n >= 1000) return n.toLocaleString('he-IL');
+  return ans;
+}
+
+function nextQuestion() {
+  currentIndex++;
+  if (currentIndex >= currentQuestions.length) {
+    showCompletion();
+  } else {
+    renderQuestion();
+  }
+}
+
+function showCompletion() {
+  document.getElementById('exerciseCard').style.display = 'none';
+  const comp = document.getElementById('completionScreen');
+  comp.classList.add('show');
+
+  const pct = Math.round((score / currentQuestions.length) * 100);
+  let emoji = '🌟', title = 'כל הכבוד!';
+  if (pct === 100) { emoji = '🏆'; title = 'מושלם לגמרי!'; }
+  else if (pct >= 80) { emoji = '🌟'; title = 'עבודה נהדרת!'; }
+  else if (pct >= 60) { emoji = '😊'; title = 'יפה! אפשר עוד קצת תרגול'; }
+  else { emoji = '💪'; title = 'תרגל עוד — אתה יכול!'; }
+
+  document.getElementById('completionEmoji').textContent = emoji;
+  document.getElementById('completionTitle').textContent = title;
+  document.getElementById('completionScoreText').textContent =
+    `ענית נכון על ${score} מתוך ${currentQuestions.length} שאלות (${pct}%)`;
+
+  if (pct >= 80) launchConfetti(50);
+}
+
+function restartTopic() {
+  setTopic(currentTopic);
+}
+
+function getPositive() {
+  const msgs = ['🎉 כל הכבוד!', '✨ מעולה!', '🌟 יופי!', '💪 נכון!', '🎊 פנטסטי!', '👏 מצוין!'];
+  return msgs[Math.floor(Math.random() * msgs.length)];
+}
+
+function launchConfetti(count = 25) {
+  const colors = ['#FF6B6B','#FFD93D','#6BCB77','#6EC6FF','#C77DFF','#FF9F43'];
+  for (let i = 0; i < count; i++) {
+    setTimeout(() => {
+      const piece = document.createElement('div');
+      piece.className = 'confetti-piece';
+      piece.style.left = Math.random() * 100 + 'vw';
+      piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+      piece.style.width = (8 + Math.random() * 8) + 'px';
+      piece.style.height = (8 + Math.random() * 8) + 'px';
+      piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      piece.style.animationDuration = (1.5 + Math.random() * 2) + 's';
+      piece.style.animationDelay = (Math.random() * 0.5) + 's';
+      document.body.appendChild(piece);
+      piece.addEventListener('animationend', () => piece.remove());
+    }, i * 40);
+  }
+}
+
+// ============================================================
+// INIT
+// ============================================================
+// Re-shuffle questions on load
+Object.keys(TOPICS).forEach(key => {
+  TOPICS[key].questions = shuffleAndPick(TOPICS[key].questions, TOPICS[key].questions.length);
+});
+
+setTopic('numbers');
+</script>
+</body>
+</html>
