@@ -511,8 +511,8 @@ function shuffle(a) { return [...a].sort(()=>Math.random()-0.5); }
 function setTopic(t) {
   currentTopic=t;
   document.querySelectorAll('.topic-btn').forEach(b=>b.classList.remove('active'));
-  ({'numbers':0,'calc':1,'geo':2})[t];
-  document.querySelectorAll('.topic-btn')[[0,1,2][['numbers','calc','geo'].indexOf(t)]].classList.add('active');
+  const idx=['numbers','calc','geo'].indexOf(t);
+  if(idx>=0) document.querySelectorAll('.topic-btn')[idx].classList.add('active');
   currentQuestions=shuffle(TOPICS[t].questions).slice(0,10);
   currentIndex=0; score=0; answered=false;
   document.getElementById('completionScreen').classList.remove('show');
