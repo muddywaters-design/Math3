@@ -309,6 +309,16 @@ var TOPICS = {
     {type:"mc",badge:"⭐ אי-שוויון",q:"1,000 + ___ > 3,000. מה מתאים?",ch:["2,000","1,999","2,001","1,000"],ok:2,ex:"1,000+2,001=3,001 > 3,000"},
     {type:"mc",badge:"⭐ אי-שוויון",q:"___ + 600 + 300 < 1,000. מה מתאים?",ch:["100","99","101","200"],ok:1,ex:"600+300=900. 99+900=999 < 1,000"},
     {type:"mc",badge:"⭐ אי-שוויון",q:"3,000 + ___ > 5,000. מה מתאים?",ch:["1,999","2,000","2,001","1,000"],ok:2,ex:"3,000+2,001=5,001 > 5,000"},
+    {type:"mc",badge:"📖 בעיה",q:"בספריה יש 3,450 ספרים. הוסיפו עוד 2,000. כמה ספרים עכשיו?",ch:["5,000","5,450","5,400","5,350"],ok:1,ex:"3,450 + 2,000 = 5,450"},
+    {type:"mc",badge:"📖 בעיה",q:"היו 7,800 כרטיסים. נמכרו 3,000. כמה נשארו?",ch:["4,800","4,700","5,000","4,600"],ok:0,ex:"7,800 - 3,000 = 4,800"},
+    {type:"mc",badge:"📖 בעיה",q:"דן חסך 2,500 ש. קנה משחק ב-800 ש. כמה נשאר?",ch:["1,600","1,700","1,800","1,500"],ok:1,ex:"2,500 - 800 = 1,700"},
+    {type:"mc",badge:"📖 בעיה",q:"בגן יש 1,200 פרחים ו-3,400 עצים. כמה בסך הכל?",ch:["4,400","4,500","4,600","4,700"],ok:2,ex:"1,200 + 3,400 = 4,600"},
+    {type:"mc",badge:"📖 בעיה",q:"הגיעו 4,320 איש. עזבו 1,200. כמה נשארו?",ch:["3,000","3,100","3,200","3,120"],ok:3,ex:"4,320 - 1,200 = 3,120"},
+    {type:"mc",badge:"📖 בעיה",q:"בקופסה יש 730 קלפים. כמה יהיה אם נכפיל ב-10?",ch:["73","730","7,300","73,000"],ok:2,ex:"730 x 10 = 7,300"},
+    {type:"mc",badge:"📖 בעיה",q:"היו 8,400 גרם קמח. חילקנו ל-100 מנות שוות. כמה בכל מנה?",ch:["84","840","8,400","8"],ok:0,ex:"8,400 : 100 = 84"},
+    {type:"mc",badge:"📖 בעיה",q:"רכב נסע 230 ק. כל יום. כמה ק. ב-10 ימים?",ch:["23","2,300","230","23,000"],ok:1,ex:"230 x 10 = 2,300"},
+    {type:"mc",badge:"📖 בעיה",q:"מספר מסוים גדול מ-4,990 וקטן מ-5,000. מה הוא?",ch:["4,989","5,000","4,995","5,001"],ok:2,ex:"4,995 נמצא בין 4,990 ל-5,000"},
+    {type:"mc",badge:"📖 בעיה",q:"אחמד קיבל 3,000 ש. גדי קיבל 500 פחות. כמה קיבל גדי?",ch:["2,400","2,500","2,600","3,500"],ok:1,ex:"3,000 - 500 = 2,500"},
   ]},
 
   calc: { name:"כפל וחילוק", questions:[
@@ -403,6 +413,14 @@ var TOPICS = {
     {type:"mc",badge:"📖 בעיה",q:"מלבן 4x4 — שטחו שווה להיקפו?",ch:["כן, שניהם 16","לא, שטח גדול","לא, היקף גדול","אי אפשר"],ok:0,ex:"שטח = 16, היקף = 16 — שווים!"},
     {type:"mc",badge:"📖 בעיה",q:"גן ריבועי עם צלע 7 מ. מה ההיקף?",ch:["21","24","28","32"],ok:2,ex:"4 x 7 = 28"},
     {type:"mc",badge:"📖 בעיה",q:"מדרכה מסביב למלבן 6x4 ס. כמה ס?",ch:["18","20","22","24"],ok:1,ex:"(6+4)x2 = 20"},
+    {type:"mc",badge:"📖 בעיה",q:"לרצפת חדר ריבועי עם צלע 6 מ. כמה מ-ר לרצפה?",ch:["24","30","36","42"],ok:2,ex:"שטח = 6x6 = 36 מ-ר"},
+    {type:"mc",badge:"📖 בעיה",q:"גדר מסביב לגינה מלבנית 8x5 מ. כמה מ גדר?",ch:["13","26","40","16"],ok:1,ex:"(8+5)x2 = 26 מ"},
+    {type:"mc",badge:"📖 בעיה",q:"אריחים מכסים מלבן 9x4 ס. כמה אריחים של 1 ס-ר?",ch:["13","26","36","40"],ok:2,ex:"9x4 = 36 אריחים"},
+    {type:"mc",badge:"📖 בעיה",q:"ריבוע עם היקף 20 ס. מה אורך כל צלע?",ch:["4","5","10","20"],ok:1,ex:"20 : 4 = 5 ס"},
+    {type:"mc",badge:"📖 בעיה",q:"מלבן 9x3 ס. מה גדול יותר — שטח או היקף?",ch:["שטח (27)","היקף (24)","שווים","תלוי"],ok:0,ex:"שטח = 9x3=27, היקף = (9+3)x2=24"},
+    {type:"mc",badge:"📖 בעיה",q:"יש 3 זוויות: 30, 90, 120. כמה זוויות חדות?",ch:["0","1","2","3"],ok:1,ex:"רק 30 < 90 — זווית חדה אחת"},
+    {type:"mc",badge:"📖 בעיה",q:"גינה מלבנית 8x5 מ. כמה עולה גדר? (כל מ עולה 10 ש)",ch:["130","260","40","80"],ok:1,ex:"היקף = (8+5)x2 = 26 מ. 26x10 = 260 ש"},
+    {type:"mc",badge:"📖 בעיה",q:"ריבוע עם שטח 49 ס-ר. מה אורך הצלע?",ch:["6","7","8","9"],ok:1,ex:"7x7 = 49 — הצלע היא 7 ס"},
   ]}
 };
 
@@ -485,16 +503,23 @@ function renderQ() {
   updateProgress();
 
   var c = document.getElementById('exerciseContent');
+  // שאלות עם עברית ארוכה = RTL, שאלות מתמטיות = LTR
+  function qDir(text) {
+    var hebrewWords = (text.match(/[\u05D0-\u05EA]+/g) || []).filter(function(w){ return w.length > 1; });
+    return hebrewWords.length >= 2 ? 'rtl' : 'ltr';
+  }
   if (q.type === 'mc') {
-    var html = '<div class="q-text">' + q.q + '</div><div class="choices-grid">';
+    var dir = qDir(q.q);
+    var html = '<div class="q-text" dir="' + dir + '">' + q.q + '</div><div class="choices-grid">';
     for (var i = 0; i < q.ch.length; i++) {
       html += '<button class="choice-btn" onclick="checkMC(' + i + ')" id="ch' + i + '">' + q.ch[i] + '</button>';
     }
     html += '</div>';
     c.innerHTML = html;
   } else {
-    c.innerHTML = '<div class="q-text">' + q.q + '</div>' +
-      '<input type="number" class="answer-input" id="answerInput" placeholder="?" inputmode="numeric" ' +
+    var dir2 = qDir(q.q);
+    c.innerHTML = '<div class="q-text" dir="' + dir2 + '">' + q.q + '</div>' +
+      '<input type="text" inputmode="numeric" pattern="[0-9]*" class="answer-input" id="answerInput" placeholder="?" ' +
       'onkeydown="if(event.key===\'Enter\')checkIn()" />' +
       '<button class="submit-btn" onclick="checkIn()">✔ בדוק</button>';
     setTimeout(function(){ var el=document.getElementById('answerInput'); if(el) el.focus(); }, 300);
@@ -520,7 +545,7 @@ function checkMC(chosen) {
     btns[q.ok].classList.add('correct');
     fb.textContent = '😅 כמעט! בפעם הבאה תצליח!'; fb.className = 'feedback wrong';
   }
-  ex.textContent = '💡 ' + q.ex; ex.className = 'explanation show';
+  ex.innerHTML = '<span dir="ltr">💡 ' + q.ex + '</span>'; ex.className = 'explanation show';
   document.getElementById('nextBtn').className = 'next-btn show';
 }
 
@@ -547,7 +572,7 @@ function checkIn() {
     inp.classList.add('wrong');
     fb.textContent = '😅 התשובה הנכונה: ' + q.ok; fb.className = 'feedback wrong';
   }
-  ex.textContent = '💡 ' + q.ex; ex.className = 'explanation show';
+  ex.innerHTML = '<span dir="ltr">💡 ' + q.ex + '</span>'; ex.className = 'explanation show';
   document.getElementById('nextBtn').className = 'next-btn show';
 }
 
